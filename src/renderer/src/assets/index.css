@@ -1,0 +1,54 @@
+// This directive imports Tailwind's base styles, which are a set of predefined styles
+// that apply to HTML elements globally. These styles include normalizations and resets to
+// ensure consistant rendering across different browsers
+@tailwind base;
+// This directive imports Tailwind's component classes, which are a collection of reusable
+// components like buttons, forms, and cards. These are often used as a starting point for
+// custom styling or as-is for standard components
+@tailwind components;
+// This directive imports Tailwind's utility classes, which are low-level, single-purpose classes
+// that control individual style properties like margin, padding, color, etc.
+@tailwind utilities;
+
+// When you include these directives in your CSS file, you are essentially telling Tailwind CSS
+// to include its default base styles, component classes, and utility classes into your stylesheet
+// This setup ensures that you have access to Tailwind's full suite of design utilities and
+// components for building your user interface.
+
+//Build Process:
+// During the build process, Tailwind CSS scans your HTML, JavaScript, and CSS files
+// to find the classes you use. It then generates a CSS file taht includes only the styles you actually
+// use.
+
+// Customizations:
+// You can customize Tailwind's default styles by extending them in your 'tailwind.config.js' file
+// or by adding custom CSS to your stylesheets.
+
+// The '@layer' directive in Tailwind CSS allows you to create custom layers of styles within
+// your CSS file. This directive is useful for adding or overriding styles in a structured way.
+// By creating custom layers, you can control the order of your CSS and ensure that your custom
+// styles do not conflict with Tailwind's default styles.
+@layer base {
+  // Applies the 'h-full' utility class to the '#root' element.
+  #root {
+    // '@apply' is used to include Tailwind utility classes directly in your CSS.
+    // The 'h-full' class sets the height to 100%. This ensures that the #root element will
+    // occupy teh full height of its parent.
+    @apply h-full;
+  },
+  html, body{
+    @apply h-full
+    @apply select-none;
+    @apply bg-transparent;
+    @apply font-mono antialiased text-white;
+    @apply overflow-hidden;
+  }
+}
+
+// Layer Management:
+// By using '@layer', you can better manage and organize your styles. It helps you avoid conflicts
+// and ensures that your custom styles area applied in the correct order
+
+// Customization:
+// You can create different laysers for base styles, components, and utilities, making it easier to maintain
+// extend your styles as your project grows
