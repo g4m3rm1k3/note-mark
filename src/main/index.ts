@@ -1,26 +1,27 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { app, shell, BrowserWindow, ipcMain } from 'electron' // Core electron modules
+import { join } from 'path' // A Node.js path module for handling file and directory paths
+import { electronApp, optimizer, is } from '@electron-toolkit/utils' // Utilities which help with Electron app configuration window optimization, and enviornment detection
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
-    autoHideMenuBar: true,
+    width: 900, // sets dimenstions of the window
+    height: 670, // sets dimensions of the window
+    show: false, // The window is created hidden and is only shown when it's ready (Prevents shoing a blank or loading screen)
+    autoHideMenuBar: true, // Hides the menu bar unless 'Alt' is pressed
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      preload: join(__dirname, '../preload/index.js'), // Specifies a preload script, which is useful for safely exposing APIs to your renderer process
+      sandbox: true, // Disables sandboxing for the renderer, allowing access to Node.js APIs directly
+      contextIsolation: true
     }
   })
-
+  // Ensusres the window is only shown when it's fully ready, improving user experience by avoiding a white flash.
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
-
+  // Prevents new windows from being opened within the app; instead, it opens links in teh user's default web browser.
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
@@ -50,7 +51,7 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('ping', () => console.log('Mike'))
 
   createWindow()
 
